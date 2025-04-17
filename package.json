@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon node app.js"
+    "start": "dotenvx run -- node app.js",
+    "dev": "dotenvx run --debug --log-level=debug -- nodemon node app.js"
   },
   "keywords": [],
   "author": "Sobhan haghverdi",
@@ -11,8 +12,9 @@
   "description": "",
   "type": "module",
   "dependencies": {
-    "@sequelize/mariadb": "^7.0.0-alpha.46",
     "express": "^5.1.0",
+    "express-async-errors": "^3.1.1",
+    "mysql2": "^3.14.0",
     "sequelize": "^6.37.7"
   }
 }
