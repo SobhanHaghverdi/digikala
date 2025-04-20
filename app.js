@@ -1,3 +1,4 @@
+import "express-async-errors";
 import express from "express";
 import "./config/sequelize-config.js";
 import registerRelations from "./config/relation-config.js";
