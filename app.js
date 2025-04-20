@@ -1,4 +1,6 @@
 import express from "express";
+import "./config/sequelize-config.js";
+import registerRelations from "./config/relation-config.js";
 
 const PORT = process.env.PORT ?? 5000;
 
@@ -7,6 +9,8 @@ async function configureServer() {
 
   app.use(express.json());
   app.use(express.urlencoded({ extended: true }));
+
+  registerRelations();
 
   app.use((req, res, next) => {
     return res.status(404).json({ message: "Endpoint does not exists" });
