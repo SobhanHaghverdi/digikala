@@ -18,5 +18,10 @@ async function create(req, res) {
   return res.json({ message: "Product created successfully !" });
 }
 
-const productController = { create, get, getAll };
+async function remove(req, res) {
+  await productService.removeById(req.params.id);
+  return res.json({ message: "Product removed successfully !" });
+}
+
+const productController = { create, get, getAll, remove };
 export default productController;

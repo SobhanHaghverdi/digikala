@@ -97,5 +97,12 @@ async function create(dto) {
   }
 }
 
-const productService = { create, getById, getAll };
+async function removeById(id) {
+  const product = await Product.findByPk(id);
+  if (!product) throw createHttpError.NotFound("Product not found");
+
+  await product.destroy();
+}
+
+const productService = { create, getById, getAll, removeById };
 export default productService;
