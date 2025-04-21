@@ -3,7 +3,6 @@ import { Sequelize } from "sequelize";
 const sequelize = new Sequelize({
   logging: false,
   dialect: "mysql",
-  sync: { force: true },
   host: process.env.DATABASE_HOST,
   port: process.env.DATABASE_PORT,
   database: process.env.DATABASE_NAME,
