@@ -1,9 +1,26 @@
 import Product from "./product-model.js";
 import createHttpError from "http-errors";
+import ProductSize from "../product-size/product-size-model.js";
 import ProductType from "../../common/constant/product-enum.js";
+import ProductColor from "../product-color/product-color-model.js";
+import ProductDetail from "../product-detail/product-detail-model.js";
 import productSizeService from "../product-size/product-size-service.js";
 import productColorService from "../product-color/product-color-service.js";
 import productDetailService from "../product-detail/product-detail-service.js";
+
+async function getById(id) {
+  return await Product.findByPk(id, {
+    include: [
+      { model: ProductSize, as: "sizes" },
+      { model: ProductColor, as: "colors" },
+      { model: ProductDetail, as: "details" },
+    ],
+  });
+}
+
+async function getAll() {
+  return await Product.findAll();
+}
 
 async function create(dto) {
   const {
@@ -80,5 +97,12 @@ async function create(dto) {
   }
 }
 
-const productService = { create };
+async function removeById(id) {
+  const product = await Product.findByPk(id);
+  if (!product) throw createHttpError.NotFound("Product not found");
+
+  await product.destroy();
+}
+
+const productService = { create, getById, getAll, removeById };
 export default productService;
