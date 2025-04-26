@@ -1,3 +1,5 @@
+import Otp from "../modules/otp/otp-model.js";
+import User from "../modules/user/user-model.js";
 import Product from "../modules/product/product-model.js";
 import ProductSize from "../modules/product-size/product-size-model.js";
 import ProductColor from "../modules/product-color/product-color-model.js";
@@ -35,6 +37,26 @@ function registerRelations() {
   });
 
   ProductSize.belongsTo(Product, { foreignKey: "productId", targetKey: "id" });
+
+  //#endregion
+
+  //#region User Relations
+
+  User.hasOne(Otp, {
+    as: "otp",
+    sourceKey: "id",
+    onDelete: "CASCADE",
+    foreignKey: "userId",
+  });
+
+  Otp.hasOne(User, {
+    as: "user",
+    sourceKey: "id",
+    foreignKey: "otpId",
+    onDelete: "CASCADE",
+  });
+
+  Otp.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
 
   //#endregion
 }
