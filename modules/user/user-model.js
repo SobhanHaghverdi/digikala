@@ -5,7 +5,7 @@ const User = sequelize.define(
   "user",
   {
     otpId: DataTypes.INTEGER,
-    fullName: { type: DataTypes.STRING, allowNull: false },
+    fullName: DataTypes.STRING,
     mobile: { type: DataTypes.STRING, allowNull: false },
   },
   { createdAt: "created_at", updatedAt: false, freezeTableName: true }
