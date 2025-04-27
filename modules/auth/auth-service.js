@@ -2,6 +2,7 @@ import jwt from "jsonwebtoken";
 import createHttpError from "http-errors";
 import otpService from "../otp/otp-service.js";
 import userService from "../user/user-service.js";
+import refreshTokenService from "../refresh-token/refresh-token-service.js";
 
 async function sendOtp(mobile) {
   let otp;
@@ -66,6 +67,11 @@ async function verifyRefreshToken(refreshToken) {
   if (verifiedToken?.userId) {
     const user = await userService.getById(verifiedToken.userId);
     if (!user) throw createHttpError(401, "Please login first");
+
+    const doesTokenExists = await refreshTokenService.getByToken(refreshToken);
+    if (doesTokenExists) throw createHttpError(401, "Token expired");
+
+    await refreshTokenService.create({ userId: user.id, token: refreshToken });
   }
 
   return generateTokens({ userId: user.id });
