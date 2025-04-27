@@ -59,5 +59,17 @@ function generateTokens(payload) {
   return { accessToken, refreshToken };
 }
 
-const authService = { sendOtp, checkOtp };
+async function verifyRefreshToken(refreshToken) {
+  if (!refreshToken) throw createHttpError(401, "Please login first");
+  const verifiedToken = jwt.verify(refreshToken, REFRESH_TOKEN_SECRET);
+
+  if (verifiedToken?.userId) {
+    const user = await userService.getById(verifiedToken.userId);
+    if (!user) throw createHttpError(401, "Please login first");
+  }
+
+  return generateTokens({ userId: user.id });
+}
+
+const authService = { sendOtp, checkOtp, verifyRefreshToken };
 export default authService;
