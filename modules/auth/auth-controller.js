@@ -12,5 +12,10 @@ async function checkOtp(req, res) {
   return res.json({ ...result, message: "You have logged in successfully" });
 }
 
-const authController = { sendOtp, checkOtp };
+async function verifyRefreshToken(req, res) {
+  const result = await authService.verifyRefreshToken(req.body.refreshToken);
+  return res.json(result);
+}
+
+const authController = { sendOtp, checkOtp, verifyRefreshToken };
 export default authController;
