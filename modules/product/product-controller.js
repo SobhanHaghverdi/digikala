@@ -2,7 +2,7 @@ import createHttpError from "http-errors";
 import productService from "./product-service.js";
 
 async function get(req, res) {
-  const product = await productService.getById(req.params.id);
+  const product = await productService.getByIdWithRelations(req.params.id);
   if (!product) throw createHttpError.NotFound("Product not found !");
 
   return res.json(product);
