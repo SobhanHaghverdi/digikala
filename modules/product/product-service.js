@@ -9,6 +9,10 @@ import productColorService from "../product-color/product-color-service.js";
 import productDetailService from "../product-detail/product-detail-service.js";
 
 async function getById(id) {
+  return await Product.findByPk(id, { raw: true });
+}
+
+async function getByIdWithRelations(id) {
   return await Product.findByPk(id, {
     include: [
       { model: ProductSize, as: "sizes" },
@@ -104,5 +108,11 @@ async function removeById(id) {
   await product.destroy();
 }
 
-const productService = { create, getById, getAll, removeById };
+const productService = {
+  create,
+  getAll,
+  getById,
+  removeById,
+  getByIdWithRelations,
+};
 export default productService;

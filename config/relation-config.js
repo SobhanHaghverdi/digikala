@@ -1,6 +1,8 @@
 import Otp from "../modules/otp/otp-model.js";
 import User from "../modules/user/user-model.js";
+import Basket from "../modules/basket/basket-model.js";
 import Product from "../modules/product/product-model.js";
+import Discount from "../modules/discount/discount-model.js";
 import ProductSize from "../modules/product-size/product-size-model.js";
 import ProductColor from "../modules/product-color/product-color-model.js";
 import ProductDetail from "../modules/product-detail/product-detail-model.js";
@@ -57,6 +59,70 @@ function registerRelations() {
   });
 
   Otp.belongsTo(User, { foreignKey: "userId", targetKey: "id" });
+
+  //#endregion
+
+  //#region Basket Relations
+
+  Product.hasMany(Basket, {
+    as: "basket",
+    sourceKey: "id",
+    foreignKey: "productId",
+  });
+
+  ProductColor.hasMany(Basket, {
+    as: "basket",
+    sourceKey: "id",
+    foreignKey: "colorId",
+  });
+
+  ProductSize.hasMany(Basket, {
+    as: "basket",
+    sourceKey: "id",
+    foreignKey: "sizeId",
+  });
+
+  User.hasMany(Basket, {
+    as: "basket",
+    sourceKey: "id",
+    foreignKey: "userId",
+  });
+
+  Discount.hasMany(Basket, {
+    as: "basket",
+    sourceKey: "id",
+    foreignKey: "discountId",
+  });
+
+  Basket.belongsTo(Product, {
+    as: "product",
+    targetKey: "id",
+    foreignKey: "productId",
+  });
+
+  Basket.belongsTo(User, {
+    as: "user",
+    targetKey: "id",
+    foreignKey: "userId",
+  });
+
+  Basket.belongsTo(ProductColor, {
+    as: "color",
+    targetKey: "id",
+    foreignKey: "colorId",
+  });
+
+  Basket.belongsTo(ProductSize, {
+    as: "size",
+    targetKey: "id",
+    foreignKey: "sizeId",
+  });
+
+  Basket.belongsTo(Discount, {
+    as: "discount",
+    targetKey: "id",
+    foreignKey: "discountId",
+  });
 
   //#endregion
 }
