@@ -1,8 +1,11 @@
 import Otp from "../modules/otp/otp-model.js";
 import User from "../modules/user/user-model.js";
+import Order from "../modules/order/order-model.js";
 import Basket from "../modules/basket/basket-model.js";
+import Payment from "../modules/payment/payment-model.js";
 import Product from "../modules/product/product-model.js";
 import Discount from "../modules/discount/discount-model.js";
+import OrderItem from "../modules/order-item/order-item-model.js";
 import ProductSize from "../modules/product-size/product-size-model.js";
 import ProductColor from "../modules/product-color/product-color-model.js";
 import ProductDetail from "../modules/product-detail/product-detail-model.js";
@@ -122,6 +125,31 @@ function registerRelations() {
     as: "discount",
     targetKey: "id",
     foreignKey: "discountId",
+  });
+
+  //#endregion
+
+  //#region Order Relations
+
+  Order.hasOne(Payment, {
+    foreignKey: "orderId",
+    sourceKey: "id",
+    as: "payment",
+  });
+
+  Order.hasMany(OrderItem, {
+    foreignKey: "orderId",
+    sourceKey: "id",
+    as: "items",
+  });
+
+  User.hasMany(Order, { foreignKey: "userId", sourceKey: "id", as: "orders" });
+  OrderItem.belongsTo(Order, { foreignKey: "orderId", targetKey: "id" });
+
+  Payment.hasOne(Order, {
+    foreignKey: "paymentId",
+    sourceKey: "id",
+    as: "order",
   });
 
   //#endregion

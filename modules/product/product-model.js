@@ -5,7 +5,7 @@ import ProductType from "../../common/constant/product-enum.js";
 const Product = sequelize.define(
   "product",
   {
-    description: DataTypes.TEXT(800),
+    description: DataTypes.TEXT,
     count: { type: DataTypes.INTEGER, defaultValue: 0 },
     price: { type: DataTypes.DECIMAL, allowNull: true },
     discount: { type: DataTypes.INTEGER, defaultValue: 0 },
