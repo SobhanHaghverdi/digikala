@@ -60,6 +60,8 @@ async function create(dto) {
   }
 
   await orderItemService.bulkCreate(orderItems);
+
+  return payment;
 }
 
 const paymentService = { create };
