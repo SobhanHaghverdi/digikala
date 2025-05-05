@@ -8,13 +8,14 @@ const Payment = sequelize.define(
     orderId: DataTypes.INTEGER,
     authority: DataTypes.STRING,
     amount: { type: DataTypes.DECIMAL, allowNull: false },
+    userId: { type: DataTypes.INTEGER, allowNull: false },
     status: { type: DataTypes.BOOLEAN, defaultValue: false },
   },
   {
     updatedAt: false,
     freezeTableName: true,
     createdAt: "created_at",
-    indexes: [{ fields: ["orderId"] }],
+    indexes: [{ fields: ["orderId", "userId"] }],
   }
 );
 

@@ -24,6 +24,10 @@ async function getAllByUserId(userId) {
     ],
   });
 
+  if (baskets.length === 0) {
+    throw new createHttpError(400, "Your basket is empty");
+  }
+
   for (const item of baskets) {
     const { product, count, color = undefined, size = undefined } = item;
 
@@ -183,5 +187,9 @@ async function upsert(dto) {
   }
 }
 
-const basketService = { upsert, getAllByUserId };
+async function removeByUserId(userId) {
+  return await Basket.destroy({ where: { userId } });
+}
+
+const basketService = { upsert, getAllByUserId, removeByUserId };
 export default basketService;
