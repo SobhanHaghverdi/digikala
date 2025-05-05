@@ -143,6 +143,12 @@ function registerRelations() {
     as: "items",
   });
 
+  User.hasMany(Payment, {
+    foreignKey: "userId",
+    sourceKey: "id",
+    as: "payments",
+  });
+
   User.hasMany(Order, { foreignKey: "userId", sourceKey: "id", as: "orders" });
   OrderItem.belongsTo(Order, { foreignKey: "orderId", targetKey: "id" });
 

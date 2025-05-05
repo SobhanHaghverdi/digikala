@@ -3,6 +3,10 @@ import orderService from "../order/order-service.js";
 import basketService from "../basket/basket-service.js";
 import orderItemService from "../order-item/order-item-service.js";
 
+async function getByAuthority(authority) {
+  return await Payment.findOne({ raw: true, where: { authority } });
+}
+
 async function create(dto) {
   const { userId } = dto;
 
@@ -60,7 +64,17 @@ async function create(dto) {
   }
 
   await orderItemService.bulkCreate(orderItems);
+
+  return payment;
 }
 
-const paymentService = { create };
+async function update(id, dto) {
+  return await Payment.update(dto, { where: { id: id } });
+}
+
+async function remove(id) {
+  return await Payment.destroy({ where: { id } });
+}
+
+const paymentService = { create, update, remove, getByAuthority };
 export default paymentService;

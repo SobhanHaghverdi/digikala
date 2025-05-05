@@ -4,5 +4,13 @@ async function create(dto) {
   return await Order.create(dto);
 }
 
-const orderService = { create };
+async function update(id, dto) {
+  return await Order.update(dto, { where: { id: id } });
+}
+
+async function remove(id) {
+  return await Order.destroy({ where: { id } });
+}
+
+const orderService = { create, update, remove };
 export default orderService;
