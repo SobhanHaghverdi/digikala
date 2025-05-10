@@ -17,5 +17,38 @@ async function getMyOrders(req, res) {
   return res.json(orders);
 }
 
-const orderController = { get, getMyOrders };
+async function cancelStatus(req, res) {
+  await orderService.cancelStatus(req.params.id, req.body.reason);
+  return res.json({ message: "Order canceled successfully" });
+}
+
+async function setPackedStatus(req, res) {
+  await orderService.setPackedStatus(req.params.id);
+  return res.json({ message: "Order status changed to packed successfully" });
+}
+
+async function setInTransitStatus(req, res) {
+  await orderService.setInTransitStatus(req.params.id);
+
+  return res.json({
+    message: "Order status changed to in-transit successfully",
+  });
+}
+
+async function setDeliveredStatus(req, res) {
+  await orderService.setDeliveredStatus(req.params.id);
+
+  return res.json({
+    message: "Order status changed to delivered successfully",
+  });
+}
+
+const orderController = {
+  get,
+  getMyOrders,
+  cancelStatus,
+  setPackedStatus,
+  setDeliveredStatus,
+  setInTransitStatus,
+};
 export default orderController;
