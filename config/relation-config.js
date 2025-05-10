@@ -158,6 +158,24 @@ function registerRelations() {
     as: "order",
   });
 
+  OrderItem.belongsTo(Product, {
+    as: "product",
+    targetKey: "id",
+    foreignKey: "productId",
+  });
+
+  OrderItem.belongsTo(ProductColor, {
+    as: "color",
+    targetKey: "id",
+    foreignKey: "colorId",
+  });
+
+  OrderItem.belongsTo(ProductSize, {
+    as: "size",
+    targetKey: "id",
+    foreignKey: "sizeId",
+  });
+
   //#endregion
 }
 
