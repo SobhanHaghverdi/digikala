@@ -1,4 +1,5 @@
 import Otp from "../modules/otp/otp-model.js";
+import Role from "../modules/role/role-model.js";
 import User from "../modules/user/user-model.js";
 import Order from "../modules/order/order-model.js";
 import Basket from "../modules/basket/basket-model.js";
@@ -6,9 +7,11 @@ import Payment from "../modules/payment/payment-model.js";
 import Product from "../modules/product/product-model.js";
 import Discount from "../modules/discount/discount-model.js";
 import OrderItem from "../modules/order-item/order-item-model.js";
+import Permission from "../modules/permission/permission-model.js";
 import ProductSize from "../modules/product-size/product-size-model.js";
 import ProductColor from "../modules/product-color/product-color-model.js";
 import ProductDetail from "../modules/product-detail/product-detail-model.js";
+import RolePermission from "../modules/role-permission/role-permission-model.js";
 
 function registerRelations() {
   //#region Product Relations
@@ -177,6 +180,31 @@ function registerRelations() {
   });
 
   //#endregion
+
+  //#region RBAC Relations
+
+  Role.hasMany(RolePermission, {
+    foreignKey: "roleId",
+    sourceKey: "id",
+    as: "permissions",
+  });
+
+  Permission.hasMany(RolePermission, {
+    foreignKey: "permissionId",
+    sourceKey: "id",
+    as: "roles",
+  });
+
+  RolePermission.belongsTo(Role, { foreignKey: "roleId", targetKey: "id" });
+
+  RolePermission.belongsTo(Permission, {
+    foreignKey: "permissionId",
+    targetKey: "id",
+  });
+
+  //#endregion
+
+  // sequelize.sync({ force: true });
 }
 
 export default registerRelations;
