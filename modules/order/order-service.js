@@ -40,6 +40,10 @@ async function create(dto) {
   return await Order.create(dto);
 }
 
+async function update(id, dto) {
+  return await Order.update(dto, { where: { id } });
+}
+
 async function setPackedStatus(id) {
   const order = await Order.findByPk(id);
   if (!order) throw createHttpError(404, "Order not found");
